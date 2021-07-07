@@ -5,11 +5,14 @@ export default class MainScene extends Phaser.Scene {
 
     preload(){
         console.log("preload")
+        this.load.atlas('blacksmith', 'assets/img/blacksmith.png', 'assets/img/blacksmith_atlas.json')
+        this.load.animation('blacksmith_anim', 'assets/img/blacksmith_anim.json')
     }
 
     create(){
         console.log("create")
-        this.player = new Phaser.Physics.Matter.Sprite(this.matter.world)
+        this.player = new Phaser.Physics.Matter.Sprite(this.matter.world,0,0,'blacksmith', 'blacksmith_idle_1')
+        this.add.existing(this.player)
         this.inputKeys = this.input.keyboard.addKeys({
             up: Phaser.Input.Keyboard.KeyCodes.W,
             down: Phaser.Input.Keyboard.KeyCodes.S,
@@ -19,8 +22,8 @@ export default class MainScene extends Phaser.Scene {
     }
 
     update(){
-        console.log("update")
-        const speed = 2.5;
+        this.player.anims.play('blacksmith_walk', true)
+        const speed = 1;
         let playerVelocity = new Phaser.Math.Vector2();
 
         if(this.inputKeys.left.isDown) {
@@ -35,6 +38,7 @@ export default class MainScene extends Phaser.Scene {
             playerVelocity.y = 1;
         }
 
+        playerVelocity.normalize()
         playerVelocity.scale(speed)
         this.player.setVelocity(playerVelocity.x, playerVelocity.y)
     }

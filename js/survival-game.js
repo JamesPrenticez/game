@@ -8,7 +8,7 @@ const config = {
     parent: 'survival-game',
     scene: [MainScene],
     scale: {
-        zoom: 2,
+        zoom: 1.6,
     },
     physics: {
         default: 'matter',
